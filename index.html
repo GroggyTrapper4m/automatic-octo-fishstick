@@ -24,20 +24,26 @@
     </div>
 
     <script>
-        function loadComponent() {
+     async  function loadComponent() {
             const ver = document.getElementById('versionPicker').value;
             const container = document.getElementById('displayArea');
-            container.innerHTML = 'Loading ' + ver + '...';
+            container.innerHTML = `<em>Attempting to load ${ver}...</em>`;
 
-            const script = document.createElement('script');
-            script.src = `./${ver}/my-component.js`; 
-            
-            script.onload = () => {
-                const tagName = ver === 'v1' ? 'my-banner' : 'my-banner-v2';
-                container.innerHTML = `<${tagName} text="UAT Testing active for ${ver}"></${tagName}>`;
-            };
-            
-            document.head.appendChild(script);
+            try {
+
+                await import(`./${ver}/my-component.js?t=${Date.now()}`);        
+                const tagName = (ver === 'v1') ? 'my-banner' : 'my-banner-v2';
+
+                // Re-clear loading text and inject the element
+                container.innerHTML = ''; 
+                const el = document.createElement(tagName);
+                el.setAttribute('text', `Module ${ver} is live!`);
+                container.appendChild(el);
+             } 
+             catch (err){
+                console.error(err);
+                container.innerHTML = `<span style="color:red">Failed to load module. ./${ver}/my-component.js. Check console.</span>`;
+              }
         }
     </script>
 </body>

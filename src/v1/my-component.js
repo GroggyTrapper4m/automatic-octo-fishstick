@@ -6,12 +6,16 @@ class MyBanner extends HTMLElement {
   connectedCallback() {
     this.shadowRoot.innerHTML = `
       <style>
-        .box { padding: 15px; background: #0078d4; color: white; border-radius: 4px; font-family: sans-serif; }
+      .box { padding: 15px; background: #0078d4; color: white; border-radius: 4px; font-family: sans-serif; }
       </style>
       <div class="box"><strong>V1:</strong> ${
         this.getAttribute("text") || "Stable Version"
-      }</div>
+      }
+      </div>
     `;
   }
 }
-customElements.define("my-banner", MyBanner);
+
+if (!customElements.get("my-banner")) {
+  customElements.define("my-banner", MyBanner);
+}

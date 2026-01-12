@@ -18,6 +18,7 @@ class MyBanner extends HTMLElement {
     `;
   }
 }
-// Note: You might need to use a different tag name or refresh the page to switch
-// because customElements.define cannot be called twice for the same tag.
-customElements.define("my-banner-v2", MyBanner);
+
+if (!customElements.get("my-banner-v2")) {
+  customElements.define("my-banner-v2", MyBanner);
+}
