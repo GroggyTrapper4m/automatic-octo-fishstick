@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Component UAT Page</title>
+    <style>
+        body { font-family: system-ui; padding: 2rem; line-height: 1.5; }
+        .controls { margin-bottom: 2rem; padding: 1rem; background: #f4f4f4; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>UAT Component Switcher</h1>
+    
+    <div class="controls">
+        <label>Select Version to Test:</label>
+        <select id="versionPicker">
+            <option value="v1">Version 1 (Stable)</option>
+            <option value="v2">Version 2 (Experimental)</option>
+        </select>
+        <button onclick="loadComponent()">Load Component</button>
+    </div>
+
+    <div id="displayArea">
+        <p>Select a version and click load to see the component.</p>
+    </div>
+
+    <script>
+        function loadComponent() {
+            const ver = document.getElementById('versionPicker').value;
+            const container = document.getElementById('displayArea');
+            container.innerHTML = 'Loading ' + ver + '...';
+
+            const script = document.createElement('script');
+            script.src = `./${ver}/my-component.js`; 
+            
+            script.onload = () => {
+                const tagName = ver === 'v1' ? 'my-banner' : 'my-banner-v2';
+                container.innerHTML = `<${tagName} text="UAT Testing active for ${ver}"></${tagName}>`;
+            };
+            
+            document.head.appendChild(script);
+        }
+    </script>
+</body>
+</html>

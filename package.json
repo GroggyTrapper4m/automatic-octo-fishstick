@@ -1,0 +1,11 @@
+{
+  "name": "web-components-demo-on-azure",
+  "version": "1.0.0",
+  "description": "Versioned Web Components served via Azure SWA",
+  "devDependencies": {
+    "terser": "^5.19.2"
+  },
+  "scripts": {
+    "build": "echo 'Build is handled by GitHub Actions. Run the bash loop locally if needed.'"
+  }
+}
