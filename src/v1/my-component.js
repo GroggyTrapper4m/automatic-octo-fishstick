@@ -1,21 +1,5 @@
-class MyBanner extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
-  }
-  connectedCallback() {
-    this.shadowRoot.innerHTML = `
-      <style>
-      .box { padding: 15px; background: #0078d4; color: white; border-radius: 4px; font-family: sans-serif; }
-      </style>
-      <div class="box"><strong>V1:</strong> ${
-        this.getAttribute("text") || "Stable Version"
-      }
-      </div>
-    `;
-  }
-}
-
-if (!customElements.get("my-banner")) {
-  customElements.define("my-banner", MyBanner);
-}
+// Collection of our sub-components that we want to keep.
+import "./components/schoolheader/schoolheader.js";
+import "./components/schoolnavigation/schoolnav.js";
+import "./components/schoolbody/schoolbody.js";
+import "./components/schoolbottomfooter/schoolbottomfooter.js";

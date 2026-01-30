@@ -1,0 +1,56 @@
+.school-bottom-footer {
+    background: #b5b4ad;
+    padding: 25px 0;
+    letter-spacing: 0.6px;
+
+    &__logo {
+        margin-bottom: 20px;
+        padding-right: 0;
+        max-width: 125px;
+
+        a {
+                display: flex;
+                justify-content: center;
+
+        }
+
+        img {
+             max-height: 85px;
+             max-width: 480px;
+        }
+
+    }
+
+    &__utility-nav-item {
+        p {
+            letter-spacing: 0.72px;
+        }
+    }
+
+    &__utility-nav-link{
+        border-right: 1px solid black;
+    }
+
+    &__links{
+        .nav-link {
+            font-size: 10px;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        &:hover{
+            color: #fff;
+        }
+        p.nav-link {
+            text-decoration: none;
+        }
+    }
+
+    &__links--notice {
+        .nav-link{
+            font-size: 10px;
+        }
+
+    }
+}

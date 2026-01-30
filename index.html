@@ -1,50 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Web Component UAT Page</title>
+    <title>Web Component Gallery Example - Homepage </title>
     <style>
-        body { font-family: system-ui; padding: 2rem; line-height: 1.5; }
+        body { padding: 3rem; line-height: 1.5; }
         .controls { margin-bottom: 2rem; padding: 1rem; background: #f4f4f4; border-radius: 8px; }
     </style>
 </head>
 <body>
-    <h1>UAT Component Switcher</h1>
-    
-    <div class="controls">
-        <label>Select Version to Test:</label>
-        <select id="versionPicker">
-            <option value="v1">Version 1 (Stable)</option>
-            <option value="v2">Version 2 (Experimental)</option>
-        </select>
-        <button onclick="loadComponent()">Load Component</button>
-    </div>
+    <h1>Component Gallery</h1>
 
-    <div id="displayArea">
-        <p>Select a version and click load to see the component.</p>
-    </div>
-
-    <script>
-     async  function loadComponent() {
-            const ver = document.getElementById('versionPicker').value;
-            const container = document.getElementById('displayArea');
-            container.innerHTML = `<em>Attempting to load ${ver}...</em>`;
-
-            try {
-
-                await import(`./${ver}/my-component.js?t=${Date.now()}`);        
-                const tagName = (ver === 'v1') ? 'my-banner' : 'my-banner-v2';
-
-                // Re-clear loading text and inject the element
-                container.innerHTML = ''; 
-                const el = document.createElement(tagName);
-                el.setAttribute('text', `Module ${ver} is live!`);
-                container.appendChild(el);
-             } 
-             catch (err){
-                console.error(err);
-                container.innerHTML = `<span style="color:red">Failed to load module. ./${ver}/my-component.js. Check console.</span>`;
-              }
-        }
+    <section>
+         <school-nav></school-nav>
+        <school-body>               
+                <h2>School Header Example (Proof Of Concept)</h2>
+                <school-header></school-header>
+        </school-body>
+        <school-bottom-footer></school-bottom-footer>
+    </section>
+    <script type="module">
+        import './src/v1/my-component.js';
     </script>
 </body>
 </html>

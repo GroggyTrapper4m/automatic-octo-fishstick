@@ -17,17 +17,23 @@ jobs:
           submodules: true
 
       - name: Install Tools
-        run: npm install -g terser
+        run: npm install -g terser sass
 
       - name: Build Versioned Components
         run: |
+          # Compilation of SASS to CSS
+          sass src:src --no-source-map
+          # Prepare our dist folder
           mkdir -p dist
-          # Loop through folders like src/v1, src/v2, etc.
+          # Loop through various components
           for dir in src/*/ ; do
             v_name=$(basename "$dir")
             echo "Processing version: $v_name"
             mkdir -p "dist/$v_name"
             
+           #Copy all files to dist folder
+           cp -r "src/$v_name/." "dist/$v_name"
+
             # Minify JS. Ensure the file name matches your actual file in src
             terser "src/$v_name/my-component.js" -o "dist/$v_name/my-component.js" --compress --mangle
           done
