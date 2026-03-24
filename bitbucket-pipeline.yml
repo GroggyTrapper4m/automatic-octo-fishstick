@@ -1,0 +1,35 @@
+image: node:20
+
+pipelines:
+  branches:
+    #ADJUST BRANCH AS NECESSARY.
+    main:
+      - step:
+          name: Build and Deploy Versioned Web Components
+          # Dependant on whether you want to keep track in bitbucket's deployment options.
+          deployment: production
+          script:
+            - npm install -g terser sass
+            # Build process
+            - sass src:src --no-source-map
+            # Create build directory
+            - mkdir -p dist
+            - |
+              for dir in src/*/ ; do
+                v_name=$(basename "$dir")
+                echo "Processing version: $v_name"
+                mkdir -p "dist/$v_name"
+                cp -r "src/$v_name/." "dist/$v_name"
+                # Minify JS
+                terser "src/$v_name/my-component.js" -o "dist/$v_name/my-component.js" --compress --mangle
+              done
+            # Copy Index file to dist location.
+            - cp index.html dist/index.html
+            - cp staticwebapp.config.json dist/staticwebapp.config.json
+            # Azure Static Web Apps Deployment Pipe
+            - pipe: microsoft/azure-static-web-apps-deploy:0.1.4
+              variables:
+                API_TOKEN: $AZURE_STATIC_WEB_APPS_API_TOKEN
+                APP_LOCATION: "dist"
+                API_LOCATION: ""
+                OUTPUT_LOCATION: ""
