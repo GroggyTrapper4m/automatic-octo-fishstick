@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Component Gallery Example - Homepage </title>
+    <style>
+        body { padding: 3rem; line-height: 1.5; }
+        .controls { margin-bottom: 2rem; padding: 1rem; background: #f4f4f4; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Component Gallery</h1>
+
+    <section>
+         <school-nav></school-nav>
+        <school-body>               
+                <h2>School Header Example (Proof Of Concept)</h2>
+                <school-header></school-header>
+        </school-body>
+        <school-bottom-footer></school-bottom-footer>
+    </section>
+    <script type="module">
+        import './v1/my-component.js';
+    </script>
+</body>
+</html>

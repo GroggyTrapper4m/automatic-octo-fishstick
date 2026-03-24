@@ -50,3 +50,6 @@ Thumbs.db
 
 #VS Code Information
 *.code-workspace
+
+#CSS files (these files should be built via SCSS)
+*.css

@@ -1,0 +1,32 @@
+.header-banner {
+    &--content{
+         padding: 33px 15px 21px;
+    }
+
+    &--tagline{
+        margin-bottom: 0;
+    
+    
+    &__link {
+        color: blue;
+        font-weight: 700;
+        letter-spacing: 1px;
+        transition: all .3s ease-out;
+        text-decoration: none;
+
+        &:hover{
+            color: white;
+            text-decoration: none;
+        }
+    }    
+    }
+
+    &--site-title{
+        color: blue;
+        font-weight: 500;
+        font-size: 45px;
+        letter-spacing: 1px;
+        line-height: 54px;
+    }
+
+}

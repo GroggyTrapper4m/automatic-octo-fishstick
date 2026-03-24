@@ -1,0 +1,52 @@
+name: Azure Static Web Apps CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - 'wip_**'
+
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build and Deploy
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install Tools
+        run: npm install -g terser sass
+
+      - name: Build Versioned Components
+        run: |
+          # Compilation of SASS to CSS
+          sass src:src --no-source-map
+          # Prepare our dist folder
+          mkdir -p dist
+          # Loop through various components
+          for dir in src/*/ ; do
+            v_name=$(basename "$dir")
+            echo "Processing version: $v_name"
+            mkdir -p "dist/$v_name"
+            
+           #Copy all files to dist folder
+           cp -r "src/$v_name/." "dist/$v_name"
+
+            # Minify JS. Ensure the file name matches your actual file in src
+            terser "src/$v_name/my-component.js" -o "dist/$v_name/my-component.js" --compress --mangle
+          done
+          # Copy demo and config files
+          cp index.html dist/index.html
+          cp staticwebapp.config.json dist/staticwebapp.config.json
+
+      - name: Deploy to Azure
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "dist" 
+          api_location: "" 
+          output_location: ""
